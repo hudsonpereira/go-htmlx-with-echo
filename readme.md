@@ -8,4 +8,4 @@
 - [ ] Use all htmlx features
 - [ ] Maybe some Go relationships
 - [ ] Style it and Publish somewhere
-- [] Do environment variables for port as well
+- [ ] Do environment variables for port as well
