@@ -43,6 +43,7 @@ func main() {
 	})
 
 	e.GET("/users", api.handlerGetUsers)
+	e.GET("/users/:ID", api.handlerGetUser)
 	e.POST("/users", api.handlerCreateUser)
 
 	e.Logger.Fatal(e.Start(":1323"))

@@ -30,7 +30,7 @@ func (api *Api) handlerGetUsers(c echo.Context) error {
 
 func (api *Api) handlerCreateUser(c echo.Context) error {
 	type parameters struct {
-		Name string
+		Name string `json:"name"`
 	}
 
 	params := parameters{}
@@ -47,8 +47,26 @@ func (api *Api) handlerCreateUser(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	return c.JSON(http.StatusCreated, user)
+}
+
+func (api *Api) handlerGetUser(c echo.Context) error {
+	id := c.Param("ID")
+
+	parsedId, err := uuid.Parse(id)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	user, err := api.DB.GetUser(c.Request().Context(), parsedId)
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, err)
+	}
+
+	return c.JSON(http.StatusOK, user)
 }
